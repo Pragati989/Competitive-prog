@@ -1,0 +1,48 @@
+class Point
+{
+    int x,y;
+    
+    Point(int x,int y)
+    {
+        this.x=x;
+        this.y=y;
+    }
+    
+    void inside(Point x1,Point x2,Point x3)
+    {
+        
+        
+        
+     double a1,a2,a3,a4;
+     
+     a1=Math.abs((x1.x)*(x2.y -x3.y) + (x2.x)*(x3.y -x1.y) + (x3.x)*(x1.y- x2.y))/2;
+     
+     a2=Math.abs((x1.x)*(x2.y -this.y) + (x2.x)*(this.y -x1.y) + (this.x)*(x1.y- x2.y))/2;
+     a3=Math.abs((this.x)*(x2.y -x3.y) + ( x2.x)*(x3.y -this.y) + (x3.x)*(this.y- x2.y))/2;
+     a4=Math.abs((x1.x)*(this.y -x3.y) + (this.x)*(x3.y -x1.y) + (x3.x)*(x1.y- this.y))/2;
+     
+      System.out.println(" "+a1+" "+a2+" "+a3 +" "+a4);
+     
+     double sum;
+     sum=(a2+a3+a4);
+     if(a1== sum)
+     System.out.println("true");
+     else 
+     System.out.println("false");
+    }
+    
+}
+
+class TestClass {
+    public static void main(String args[] ) throws Exception {
+
+
+        Point p1=new Point(1,2);
+        Point p2=new Point(5,2);
+        Point p3=new Point(3,5);
+        Point p4=new Point(3,3);
+        
+        
+        boolean b=false;
+        p4.inside(p1,p2,p3);
+}
