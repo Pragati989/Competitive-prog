@@ -1,0 +1,144 @@
+{
+import java.util.Scanner;
+class Node
+{
+    int data;
+    Node left,right;
+    Node(int d){
+        data=d;
+        left=right=null;
+    }
+}
+class TreeNode
+{
+     public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        while(t-->0){
+            int n=sc.nextInt();
+            if(n==0){
+                System.out.println(0);
+                continue;
+            }
+            Node root = null;
+            for(int i=0;i<n;i++){
+                int a=sc.nextInt();
+                int a1=sc.nextInt();
+                char lr=sc.next().charAt(0);
+                if(i==0){
+                    root=new Node(a);
+                    switch(lr){
+                        case 'L':root.left=new Node(a1);
+                        break;
+                        case 'R':root.right=new Node(a1);
+                        break;
+                    }
+                }
+                else{
+                    insert(root,a,a1,lr);
+                }
+            }
+            Node head = null;
+            //inorder(root);
+            GfG g=new GfG();
+           root = g.convertToDLL(root);
+            g.pritntDLL();
+            System.out.println();
+           
+           // System.out.println(g.tilt(root));
+        }
+    }
+    public static void insert(Node root,int a,int a1,char lr){
+        if(root==null){
+            return;
+        }
+        if(root.data==a){
+            switch(lr){
+                case 'L':root.left=new Node(a1);
+                break;
+                case 'R':root.right=new Node(a1);
+                break;
+            }
+            return;
+        }
+        insert(root.left,a,a1,lr);
+        insert(root.right,a,a1,lr);
+    }
+    public static void inorder(Node root){
+        if(root==null){
+            return;
+        }
+        inorder(root.left);
+        System.out.print(root.data+" ");
+        inorder(root.right);
+    }
+}
+}
+class GfG
+{
+    Node head=null;
+    Node current=null;
+    
+    void pritntDLL()
+    {
+        printNext(head);
+        System.out.println();
+        printPre(current);
+    }
+    
+    void printNext(Node root)
+    {
+        if(root== null)
+        return;
+        
+        System.out.print(root.data+ " ");
+        printNext(root.right);
+    }
+    
+     
+    void printPre(Node root)
+    {
+        if(root == null)
+        return;
+        
+        System.out.print(root.data+ " ");
+        printPre(root.left);
+    }
+    
+    Node convertToDLL(Node root)
+    {
+        if(root == null)
+        return head;
+        
+        //if leaf node
+        if(root.left == null && root.right== null)
+        {
+            //first leaf
+            if(current==null)
+            {
+                current=root;
+                head=root;
+            }
+            //leaves other than 1st leaf
+            else
+            {
+                current.right=root;
+                root.left=current;
+                current=root;
+            }
+        }
+        
+        //non leaf node
+        else
+        {
+        if(root.left !=null)
+        convertToDLL(root.left);
+        if(root.right !=null)
+         convertToDLL(root.right);
+        }
+         
+         
+         return head;
+    }
+}
+
