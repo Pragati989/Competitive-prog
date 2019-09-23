@@ -1,0 +1,120 @@
+{
+//Initial Template for Java
+/*package whatever //do not write package name here */
+import java.io.*;
+import java.util.*;
+class Node {
+    int data;
+    Node left, right;
+    
+    public Node(int data){
+        this.data = data;
+    }
+}
+class GFG {
+    
+    public static void inorder(Node root){
+        if(root == null)
+            return;
+        
+        inorder(root.left);
+        System.out.print(root.data+" ");
+        inorder(root.right);
+    }
+    
+	public static void main (String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		while(t-- > 0){
+		    HashMap<Integer, Node> map = new HashMap<>();
+		    
+		    int n = sc.nextInt();
+             
+            Node root = null;
+            Node parent;
+		    while(n-- > 0){
+		        int p = sc.nextInt();
+		        if(!map.containsKey(p)){
+		            root = new Node(p);
+		            map.put(root.data, root);
+		        }
+		        parent = map.get(p);
+		        
+		        int ch = sc.nextInt();
+		        Node child = new Node(ch);
+		        
+		        char c = sc.next().charAt(0);
+		        if(c == 'L')
+		            parent.left = child;
+		        else if(c == 'R')
+		            parent.right = child;
+		            
+		        map.put(ch, child);
+		    }
+		    
+		    Solution obj = new Solution();
+		    obj.exchangeLeaves(root);
+		    
+		    inorder(root);
+		    System.out.println();
+		}
+	}
+}
+}
+
+
+class Solution {
+    
+    ArrayList l=new ArrayList();
+    public void exchangeLeaves(Node root){
+        //Write your code 
+        
+        findLeaves(root);
+        
+        int n;
+        n=l.size();
+        
+        if(n%2 ==0)
+        {
+        for(int i=0;i<=(n-2);i=i+2)
+        {
+            int temp;
+            temp=((Node)(l.get(i))).data;
+            ((Node)(l.get(i))).data=((Node)(l.get(i+1))).data;
+            ((Node)(l.get(i+1))).data=temp;
+        }
+        }
+        else
+        {
+              for(int i=0;i<=(n-3);i=i+2)
+        {
+            int temp;
+            temp=((Node)(l.get(i))).data;
+            ((Node)(l.get(i))).data=((Node)(l.get(i+1))).data;
+            ((Node)(l.get(i+1))).data=temp;
+        }
+            
+        }
+   
+    public void findLeaves(Node root)
+    {
+        if(root== null) return;
+        
+        if(root.left == null  && root.right== null)
+        {
+            l.add(root);
+        }
+        else
+        {
+            if(root.left != null)
+            findLeaves(root.left);
+            
+             if(root.right != null)
+            findLeaves(root.right);
+        }
+
+        
+    }
+    
+}
+
